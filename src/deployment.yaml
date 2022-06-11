@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conversaot
+spec:
+  replicas: 02
+  selector:
+    matchLabels:
+      app: conversaot
+  template:
+    metadata:
+      labels: 
+        app: conversaot
+    spec:
+      containers:
+       - name: conversaot
+         image: danielbarbosa93/conversao-temperatura
+         ports:
+          - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: conversaot-service
+spec:
+  selector:
+    app: conversaot
+  ports:
+  - port: 8080
+    nodePort: 30000
+  type: NodePort
